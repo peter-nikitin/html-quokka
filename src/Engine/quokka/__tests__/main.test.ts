@@ -6,7 +6,7 @@ describe("format template string", () => {
 
 
     test("simple output", () => {
-      const input = "${hihi}";
+      const input = "${ hihi }";
 
       const result = runFormat(input);
 

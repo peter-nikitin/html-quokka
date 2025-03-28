@@ -1,0 +1,17 @@
+	<strong>Hello, ${ RecipientFirstName }!</strong> 
+	<div>
+    	@{if Recipient.Age > 90 }
+    	<div class="condition">
+        	${RecipientDeathDateTime}
+		@{ if Recipient.IsMale }сделал@{else}сделала@{end if}     	</div>
+    	@{end if}
+
+    	@{ for productThatHeLiked in BoughtProducts }
+    	<div>{productThatHeLiked.Name}</div>
+    	<div>{productThatHeLiked.Price}</div>
+    	@{ end for }
+	</div>
+
+@{* <div>Еще один секрет секрет</div> *}
+</body>
+</html>

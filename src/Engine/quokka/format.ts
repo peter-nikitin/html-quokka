@@ -1,4 +1,4 @@
-import { QuokkaTemplate } from "./Engine/quokka/QuokkaTemplate";
+import { QuokkaTemplate } from "./QuokkaTemplate";
 
 export const runFormat = (input: string): string => {
   const template = new QuokkaTemplate(input);

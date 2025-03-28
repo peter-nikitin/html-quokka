@@ -1,0 +1,15 @@
+${ Recipient.Email }
+${ Context.IsTest }
+${ Recipient.FirstName }
+${ Recipient.LastName }
+${ Recipient.Order.Address }
+${ Recipient.Order.Price }
+${ Recipient.Order.Staff.Name }
+${ Recipient.Order.Staff.Phone }
+${ Recipient.Email }
+${ Context.DayOfWeek }
+
+@{ for item in Recipient.Friends }
+	${ item.Name }
+	${ item.Age }
+@{ end for }
