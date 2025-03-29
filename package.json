@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "generate-lexer": "antlr-ng -Dlanguage=TypeScript  -v -o ./src/generated/HTML  --lib ./src/generated ./src/Grammar/HTML/HTMLLexer.g4",
-    "generate-parser": "antlr-ng -Dlanguage=TypeScript  -v -o ./src/generated/HTML  --lib ./src/generated ./src/Grammar/HTML/HTMLParser.g4",
-    "generate": "npm run generate-lexer && npm run generate-parser",
-    "antlr": "antlr-ng -Dlanguage=TypeScript  -v -o ./src/QuokkaHtml-generated  --lib ./src/generated ./src/Grammar/Quokka/QuokkaHtml.g4",
+    "generate-grammar": "tsx ./scripts/generate.ts",
     "testrig": "testrig /Users/nikitin/Documents/training/quokka-formatter/src/generated/Html/HTML htmlDocument --tokens --trace --diagnostics --tree /Users/nikitin/Documents/training/quokka-formatter/src/examples/link.html",
     "interpreter": "interpreter htmlDocument --tree --tokens --trace /Users/nikitin/Documents/training/quokka-formatter/src/examples/nested-tags.html  /Users/nikitin/Documents/training/quokka-formatter/src/Grammar/HTML/HTMLParser.g4 /Users/nikitin/Documents/training/quokka-formatter/src/Grammar/HTML/HTMLLexer.g4"
   },
