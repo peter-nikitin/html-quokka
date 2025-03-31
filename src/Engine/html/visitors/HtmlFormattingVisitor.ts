@@ -1,12 +1,14 @@
 // src/Engine/html/visitors/HtmlFormattingVisitor.ts
 import {
-  HtmlChardataContext, HtmlContentContext,
-  HtmlDocumentContext, HtmlElementContext,
-  HtmlMiscContext, HtmlAttributeContext
-} from "../../../generated/HTML/HTMLParser";
-import {HTMLParserVisitor} from "../../../generated/HTML/HTMLParserVisitor";
-import {TerminalNode} from "antlr4ng";
-
+  HtmlChardataContext,
+  HtmlContentContext,
+  HtmlDocumentContext,
+  HtmlElementContext,
+  HtmlMiscContext,
+  HtmlAttributeContext,
+} from '../../../generated/HTML/HTMLParser';
+import { HTMLParserVisitor } from '../../../generated/HTML/HTMLParserVisitor';
+import { TerminalNode } from 'antlr4ng';
 
 export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
   private indentLevel = 0;
@@ -15,17 +17,14 @@ export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
     return ' '.repeat(this.indentLevel * 2);
   }
 
-
   visitHtmlDocument = (ctx: HtmlDocumentContext): string => {
     // Начинаем с пустой строки и обрабатываем все дочерние элементы
-    return ctx.children
-      .map(child => child.accept(this))
-      .join('');
-  }
+    return ctx.children.map(child => child.accept(this)).join('');
+  };
 
   visitHtmlElement = (ctx: HtmlElementContext): string => {
     if (ctx.SCRIPTLET() || ctx.script() || ctx.style()) {
-      return [this.indent(), ctx.getText()].join("");
+      return [this.indent(), ctx.getText()].join('');
     }
 
     if (ctx.TAG_SLASH_CLOSE()) {
@@ -36,7 +35,7 @@ export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
     const closeTag = this.createCloseTag(ctx);
 
     if (!ctx.htmlContent()) {
-      return [this.indent(), openTag, closeTag, "\n"].join('');
+      return [this.indent(), openTag, closeTag, '\n'].join('');
     }
 
     const openPart = [this.indent(), openTag, '\n'];
@@ -44,70 +43,69 @@ export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
     const closePart = [this.indent(), closeTag, '\n'];
 
     return openPart.concat(contentPart).concat(closePart).join('');
-  }
+  };
 
   private formatInnerContent = (ctx: HtmlElementContext): string[] => {
     this.indentLevel++;
     const innerContent = ctx.htmlContent()?.accept(this);
     this.indentLevel--;
 
-    return [innerContent].filter(Boolean) as string[]
-  }
+    return [innerContent].filter(Boolean) as string[];
+  };
 
   private parseTag = (ctx: HtmlElementContext) => {
     const tagNames = ctx.TAG_NAME();
 
     if (!tagNames) {
-      throw new Error('No tag name')
+      throw new Error('No tag name');
     }
 
-    return tagNames.map((node) => node.accept(this))
-  }
+    return tagNames.map(node => node.accept(this));
+  };
 
   private createOpenTagPart = (ctx: HtmlElementContext) => {
-    const [openTag,] = this.parseTag(ctx);
+    const [openTag] = this.parseTag(ctx);
 
-    const attributes = ctx.htmlAttribute()
+    const attributes = ctx
+      .htmlAttribute()
       .map(attr => attr.accept(this))
       .join(' ');
 
-    const tagParts = ['<', openTag]
+    const tagParts = ['<', openTag];
 
     if (attributes) {
       tagParts.push(' ');
-      tagParts.push(attributes)
+      tagParts.push(attributes);
     }
 
-    return tagParts
-  }
+    return tagParts;
+  };
 
   private createOpenTag = (ctx: HtmlElementContext) => {
     const tagParts = this.createOpenTagPart(ctx);
 
-    tagParts.push('>')
+    tagParts.push('>');
 
     return tagParts.filter(Boolean).join('');
-
-  }
+  };
 
   private createSelfclosingTag = (ctx: HtmlElementContext) => {
     const tagParts = this.createOpenTagPart(ctx);
 
-    tagParts.push('/>')
+    tagParts.push('/>');
 
     return tagParts.filter(Boolean).join('');
-  }
+  };
 
   private createCloseTag = (ctx: HtmlElementContext) => {
     const [, closeTag] = this.parseTag(ctx);
-    return `</${closeTag}>`
-  }
-
+    return `</${closeTag}>`;
+  };
 
   visitHtmlContent = (ctx: HtmlContentContext): string => {
     let result = '';
 
-    ctx.children.forEach((child) => {
+    ctx.children.forEach(child => {
       if (child instanceof HtmlElementContext) {
         result += child.accept(this);
 
@@ -121,13 +119,13 @@ export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
           result += `${this.indent()}${text}\n`;
         }
 
-        return
+        return;
       }
       result += `${this.indent()}${child.accept(this)}\n`;
-    })
+    });
 
     return result;
-  }
+  };
 
   visitHtmlAttribute = (ctx: HtmlAttributeContext): string => {
     const name = ctx.TAG_NAME().getText();
@@ -137,17 +135,17 @@ export class HtmlFormattingVisitor extends HTMLParserVisitor<string> {
     }
 
     return name;
-  }
+  };
 
   visitHtmlChardata = (ctx: HtmlChardataContext): string => {
     return ctx.getText();
-  }
+  };
 
   visitHtmlMisc = (ctx: HtmlMiscContext): string => {
     return ctx.getText();
-  }
+  };
 
   visitTerminal = (node: TerminalNode): string => {
     return node.getText();
-  }
+  };
 }

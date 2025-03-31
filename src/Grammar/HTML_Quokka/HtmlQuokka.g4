@@ -25,10 +25,10 @@ htmlContent:
 	(
 		(
 			outputBlock
+			| dynamicBlock
 			| htmlElement
 			| CDATA
 			| htmlComment
-			| dynamicBlock
 			| htmlChardata
 		)
 	)*;
@@ -58,11 +58,11 @@ commentBlock: SingleInstructionComment;
 ifStatement:
 	ifCondition elseIfCondition* elseCondition? endIfInstruction;
 
-ifCondition: ifInstruction htmlContent?;
+ifCondition: ifInstruction htmlContent;
 
-elseCondition: elseInstruction htmlContent?;
+elseCondition: elseInstruction htmlContent;
 
-elseIfCondition: elseIfInstruction htmlContent?;
+elseIfCondition: elseIfInstruction htmlContent;
 
 ifInstruction:
 	ControlInstructionStart If booleanExpression InstructionEnd;
@@ -76,7 +76,7 @@ endIfInstruction: ControlInstructionStart EndIf InstructionEnd;
 
 // Loop statement	
 
-forStatement: forInstruction htmlContent? endForInstruction;
+forStatement: forInstruction htmlContent endForInstruction;
 
 forInstruction:
 	ControlInstructionStart For iterationVariable In variantValueExpression InstructionEnd;

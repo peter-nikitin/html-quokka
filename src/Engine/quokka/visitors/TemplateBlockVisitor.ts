@@ -1,17 +1,19 @@
-
-import { DynamicBlockVisitor } from "./DynamicBlockVisitor";
-import {StaticBlockVisitor} from "./StaticBlockVisitor";
-import {DynamicBlockContext, StaticBlockContext, TemplateBlockContext} from "../../../generated/Quokka/QuokkaParser";
-import {QuokkaVisitor} from "../../../generated/Quokka/QuokkaVisitor";
-
+import { DynamicBlockVisitor } from './DynamicBlockVisitor';
+import { StaticBlockVisitor } from './StaticBlockVisitor';
+import {
+  DynamicBlockContext,
+  StaticBlockContext,
+  TemplateBlockContext,
+} from '../../../generated/Quokka/QuokkaParser';
+import { QuokkaVisitor } from '../../../generated/Quokka/QuokkaVisitor';
 
 export class TemplateBlockVisitor extends QuokkaVisitor<string> {
   defaultResult(): string {
-    throw new Error("not supported");
+    throw new Error('not supported');
   }
 
   visitTemplateBlock = (ctx: TemplateBlockContext): string => {
-    return ctx.children.map((child) => child.accept(this)).join("");
+    return ctx.children.map(child => child.accept(this)).join('');
   };
 
   visitStaticBlock = (ctx: StaticBlockContext): string => {

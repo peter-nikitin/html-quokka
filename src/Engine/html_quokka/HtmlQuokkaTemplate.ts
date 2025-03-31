@@ -1,8 +1,7 @@
-import { CharStream, CommonTokenStream } from "antlr4ng";
-import { HtmlQuokka } from "../../generated/HTML_Quokka/HtmlQuokka";
-import { HtmlQuokkaLexer } from "../../generated/HTML_Quokka/HtmlQuokkaLexer";
-
-import { BaseVisitor } from "./visitors/baseVisitor";
+import { CharStream, CommonTokenStream } from 'antlr4ng';
+import { HtmlQuokka } from '../../generated/HTML_Quokka/HtmlQuokka';
+import { HtmlQuokkaLexer } from '../../generated/HTML_Quokka/HtmlQuokkaLexer';
+import { HtmlDocumentVisitor } from './visitors/html/HtmlDocumentVisitor';
 
 export class HtmlQuokkaTemplate {
   formatterString: string | null;
@@ -19,6 +18,6 @@ export class HtmlQuokkaTemplate {
 
     const rootContext = parser.htmlDocument();
 
-    return rootContext.accept(new BaseVisitor());
+    return rootContext.accept(new HtmlDocumentVisitor());
   }
 }

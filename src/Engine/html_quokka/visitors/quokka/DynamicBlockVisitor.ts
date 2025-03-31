@@ -1,22 +1,21 @@
 import { ForBlockVisitor } from './ForBlockVisitor';
 import { IfBlockVisitor } from './IfBlockVisitor';
 
-import { TemplateBlockVisitor } from './TemplateBlockVisitor';
 import {
-  AssignmentBlockContext,
-  CommentBlockContext,
   DynamicBlockContext,
-  ForStatementContext,
+  CommentBlockContext,
+  AssignmentBlockContext,
   IfStatementContext,
-} from '../../../generated/Quokka/QuokkaParser';
-import { QuokkaVisitor } from '../../../generated/Quokka/QuokkaVisitor';
+  ForStatementContext,
+} from '../../../../generated/HTML_Quokka/HtmlQuokka';
+import { HtmlQuokkaVisitor } from '../../../../generated/HTML_Quokka/HtmlQuokkaVisitor';
 
-export class DynamicBlockVisitor extends QuokkaVisitor<string | null> {
-  templateBlockVisitor: TemplateBlockVisitor;
+export class DynamicBlockVisitor extends HtmlQuokkaVisitor<string | null> {
+  private indentLevel: number;
 
-  constructor(templateBlockVisitor: TemplateBlockVisitor) {
+  constructor(indentLevel: number) {
     super();
-    this.templateBlockVisitor = templateBlockVisitor;
+    this.indentLevel = indentLevel;
   }
 
   visitDynamicBlock = (ctx: DynamicBlockContext): string | null => {
@@ -32,10 +31,10 @@ export class DynamicBlockVisitor extends QuokkaVisitor<string | null> {
   };
 
   visitIfStatement = (ctx: IfStatementContext): string | null => {
-    return ctx.accept(new IfBlockVisitor(this.templateBlockVisitor));
+    return ctx.accept(new IfBlockVisitor(this.indentLevel + 1));
   };
 
   visitForStatement = (ctx: ForStatementContext): string | null => {
-    return ctx.accept(new ForBlockVisitor(this.templateBlockVisitor));
+    return ctx.accept(new ForBlockVisitor(this.indentLevel + 1));
   };
 }

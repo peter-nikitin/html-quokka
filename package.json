@@ -5,19 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
+    "check-scripts": "eslint --ext .tsx,.ts,.js src",
     "generate-grammar": "tsx ./scripts/generate.ts",
     "testrig": "testrig /Users/nikitin/Documents/training/quokka-formatter/src/generated/Html/HTML htmlDocument --tokens --trace --diagnostics --tree /Users/nikitin/Documents/training/quokka-formatter/src/examples/link.html",
-    "interpreter": "interpreter htmlDocument --tree --tokens --trace /Users/nikitin/Documents/training/quokka-formatter/src/examples/nested-tags.html  /Users/nikitin/Documents/training/quokka-formatter/src/Grammar/HTML/HTMLParser.g4 /Users/nikitin/Documents/training/quokka-formatter/src/Grammar/HTML/HTMLLexer.g4"
+    "interpreter": "interpreter htmlDocument --tree --tokens --trace ./src/examples/tag-with-if.html  ./src/Grammar/HTML_Quokka/HtmlQuokka.g4 ./src/Grammar/HTML_Quokka/HtmlQuokkaLexer.g4"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@stylistic/eslint-plugin": "^4.2.0",
     "@types/node": "^22.13.8",
     "antlr-ng": "^1.0.4",
     "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^16.0.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.25.0",
     "vitest": "^3.0.7"

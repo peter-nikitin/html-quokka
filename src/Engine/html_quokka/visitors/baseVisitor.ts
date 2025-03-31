@@ -1,9 +1,5 @@
-
-import {
-  HtmlContentContext, HtmlDocumentContext,
-
-} from "../../../generated/HTML_Quokka/HtmlQuokka";
-import { HtmlQuokkaVisitor } from "../../../generated/HTML_Quokka/HtmlQuokkaVisitor";
+import { HtmlContentContext, HtmlDocumentContext } from '../../../generated/HTML_Quokka/HtmlQuokka';
+import { HtmlQuokkaVisitor } from '../../../generated/HTML_Quokka/HtmlQuokkaVisitor';
 
 export class BaseVisitor extends HtmlQuokkaVisitor<string | null> {
   visitHtmlContent = (ctx: HtmlContentContext) => {

@@ -1,10 +1,8 @@
-import { CharStream, CommonTokenStream } from "antlr4ng";
+import { CharStream, CommonTokenStream } from 'antlr4ng';
 
-
-
-import { TemplateVisitor } from "./visitors/TemplateVisitor";
-import {QuokkaLex} from "../../generated/Quokka/QuokkaLex";
-import {QuokkaParser} from "../../generated/Quokka/QuokkaParser";
+import { TemplateVisitor } from './visitors/TemplateVisitor';
+import { QuokkaLex } from '../../generated/Quokka/QuokkaLex';
+import { QuokkaParser } from '../../generated/Quokka/QuokkaParser';
 
 export class QuokkaTemplate {
   formatterString: string | null;

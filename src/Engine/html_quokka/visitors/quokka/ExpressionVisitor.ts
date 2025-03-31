@@ -1,4 +1,5 @@
-import { QuokkaVisitor } from '../../../generated/Quokka/QuokkaVisitor';
+import { TerminalNode } from 'antlr4ng';
+import { HtmlQuokkaVisitor } from '../../../../generated/HTML_Quokka/HtmlQuokkaVisitor';
 import {
   AndExpressionContext,
   ArgumentListContext,
@@ -32,10 +33,9 @@ import {
   StringExpressionContext,
   VariableValueExpressionContext,
   VariantValueExpressionContext,
-} from '../../../generated/Quokka/QuokkaParser';
-import { TerminalNode } from 'antlr4ng';
+} from '../../../../generated/HTML_Quokka/HtmlQuokka';
 
-export class ExpressionVisitor extends QuokkaVisitor<string | null> {
+export class ExpressionVisitor extends HtmlQuokkaVisitor<string | null> {
   visitFilterChain = (ctx: FilterChainContext): string | null => {
     return ctx.children.map(child => child.accept(this)).join('');
   };

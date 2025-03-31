@@ -1,8 +1,8 @@
-import {CharStream, CommonTokenStream} from "antlr4ng";
-import {HTMLLexer} from "../../generated/HTML/HTMLLexer";
-import {HTMLParser} from "../../generated/HTML/HTMLParser";
+import { CharStream, CommonTokenStream } from 'antlr4ng';
+import { HTMLLexer } from '../../generated/HTML/HTMLLexer';
+import { HTMLParser } from '../../generated/HTML/HTMLParser';
 
-import {HtmlFormattingVisitor} from "./visitors/HtmlFormattingVisitor";
+import { HtmlFormattingVisitor } from './visitors/HtmlFormattingVisitor';
 
 export class HtmlTemplate {
   formatterString: string | null;

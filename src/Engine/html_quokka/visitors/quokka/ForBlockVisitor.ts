@@ -1,26 +1,27 @@
-import { TemplateBlockVisitor } from './TemplateBlockVisitor';
-import { QuokkaVisitor } from '../../../generated/Quokka/QuokkaVisitor';
 import {
-  EndForInstructionContext,
-  ForInstructionContext,
   ForStatementContext,
+  ForInstructionContext,
   IterationVariableContext,
-} from '../../../generated/Quokka/QuokkaParser';
+  EndForInstructionContext,
+} from '../../../../generated/HTML_Quokka/HtmlQuokka';
+import { HtmlQuokkaVisitor } from '../../../../generated/HTML_Quokka/HtmlQuokkaVisitor';
+import { printIndent } from '../../../../helpers/printIndent';
+import { HtmlContentVisitor } from '../html/HtmlContentVisitor';
 import { ExpressionVisitor } from './ExpressionVisitor';
 
-export class ForBlockVisitor extends QuokkaVisitor<string | null> {
-  templateBlockVisitor: TemplateBlockVisitor;
+export class ForBlockVisitor extends HtmlQuokkaVisitor<string | null> {
+  indentLevel: number;
 
-  constructor(templateBlockVisitor: TemplateBlockVisitor) {
+  constructor(indentLevel: number) {
     super();
-    this.templateBlockVisitor = templateBlockVisitor;
+    this.indentLevel = indentLevel;
   }
 
   visitForStatement = (ctx: ForStatementContext): string | null => {
     return [
-      ctx.forInstruction().accept(this),
-      ctx.templateBlock()?.accept(this.templateBlockVisitor) || '',
-      ctx.endForInstruction().accept(this),
+      [printIndent(this.indentLevel), ctx.forInstruction().accept(this)].join(''),
+      ctx.htmlContent()?.accept(new HtmlContentVisitor(this.indentLevel + 1)) || '',
+      [printIndent(this.indentLevel), ctx.endForInstruction().accept(this)].join(''),
     ].join('\n');
   };
 

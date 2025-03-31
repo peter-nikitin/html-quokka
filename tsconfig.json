@@ -35,7 +35,4 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "files": [
-    "./types.d.ts"
-  ]
 }
